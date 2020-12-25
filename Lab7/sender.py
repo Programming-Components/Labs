@@ -7,15 +7,16 @@ sender_db = sqlite3.connect('sender.db')
 rabbit_conn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = rabbit_conn.channel()
 
+channel.queue_purge(queue='team6_queue')
 channel.queue_declare(queue='team6_queue', durable=True)
 
 
 for i in range(20):
     time.sleep(2)
-    rand_id = random.randrange(1,3)
+    rand_id = random.randrange(1,4)
     cursor = sender_db.execute(f'SELECT TEXT, TIME FROM MESSAGE m WHERE m.ID = {rand_id}')
     row = cursor.fetchone()
-    message = f'Message: {row[0]}, Time: {row[1]}'
+    message = f'{i}: {row[0]} {row[1]}'
 
     channel.basic_publish(
         exchange='',
@@ -23,7 +24,7 @@ for i in range(20):
         body=message,
         properties=pika.BasicProperties(delivery_mode=2)
     )
-    print(f'Sent {i}: ({message})')
+    print(f'Sent : "{message}"')
 
 
 rabbit_conn.close()
