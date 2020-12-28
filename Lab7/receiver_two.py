@@ -19,7 +19,7 @@ def get_values(message):
 
 
 def callback(ch, method, properties, body):
-    print("Receiver_one got the message!")
+    print("Receiver_two got the message!")
     print(body.decode('utf-8'))
     index, text, mes_time = get_values(body.decode('utf-8'))
 

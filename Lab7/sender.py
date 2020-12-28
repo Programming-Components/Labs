@@ -7,7 +7,7 @@ sender_db = sqlite3.connect('sender.db')
 rabbit_conn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = rabbit_conn.channel()
 
-channel.queue_purge(queue='team6_queue')
+# channel.queue_purge(queue='team6_queue')
 channel.queue_declare(queue='team6_queue', durable=True)
 
 
