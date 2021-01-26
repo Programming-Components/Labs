@@ -5,6 +5,8 @@ import time
 receiver_one = sqlite3.connect('receiver_one.db')
 rabbit_conn = pika.BlockingConnection(
     pika.ConnectionParameters(host='localhost'))
+receiver_one.execute("delete from mes_results; ")
+receiver_one.commit()
 channel = rabbit_conn.channel()
 
 channel.queue_declare(queue='team6_queue', durable=True)

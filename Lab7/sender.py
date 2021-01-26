@@ -7,11 +7,9 @@ sender_db = sqlite3.connect('sender.db')
 rabbit_conn = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = rabbit_conn.channel()
 
-# channel.queue_purge(queue='team6_queue')
 channel.queue_declare(queue='team6_queue', durable=True)
 
-
-for i in range(20):
+for i in range(30):
     time.sleep(2)
     rand_id = random.randrange(1,4)
     cursor = sender_db.execute(f'SELECT TEXT, TIME FROM MESSAGE m WHERE m.ID = {rand_id}')
